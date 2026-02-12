@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>bitcandy</title>
+    <style>
+        /* 외부 연결 없이 내부에서 디자인 정의 */
+        body { margin: 0; font-family: sans-serif; background: #f3f4f6; color: #333; }
+        nav { background: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .page { display: none; background: white; padding: 2rem; border-radius: 10px; border: 1px solid #ddd; }
+        .active { display: block; }
+        .post-item { padding: 1.5rem; border-bottom: 1px solid #eee; cursor: pointer; display: flex; gap: 1rem; }
+        .post-item:hover { background: #fafafa; }
+        .vote-box { display: flex; flex-direction: column; align-items: center; color: #999; width: 30px; }
+        button { cursor: pointer; border: none; border-radius: 5px; padding: 0.5rem 1rem; }
+        .btn-main { background: #374151; color: white; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo" onclick="showPage('main')">bitcandy</div>
+        <div>
+            <button onclick="showPage('login')">로그인</button>
+            <button class="btn-main" onclick="showPage('register')">회원가입</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="main" class="page active">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <h2>커뮤니티 광장</h2>
+                <button class="btn-main" onclick="showPage('write')">글쓰기</button>
+            </div>
+            <div class="post-item" onclick="showPage('postDetail')">
+                <div class="vote-box"><span>▲</span><strong>10</strong><span>▼</span></div>
+                <div>
+                    <h3 style="margin:0">비트캔디에 오신 것을 환영합니다.</h3>
+                    <p style="color:#666; font-size:0.9rem;">자유롭게 이야기를 나누세요.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="postDetail" class="page">
+            <button onclick="showPage('main')">← 목록으로</button>
+            <div style="display:flex; gap:2rem; margin-top:2rem;">
+                <div class="vote-box"><span>▲</span><strong>10</strong><span>▼</span></div>
+                <div style="flex:1">
+                    <h2>비트캔디에 오신 것을 환영합니다.</h2>
+                    <p>이곳은 게시글 상세 내용이 들어가는 자리입니다.</p>
+                    <hr>
+                    <h4>댓글</h4>
+                    <textarea style="width:100%; height:80px;"></textarea>
+                    <button class="btn-main" style="margin-top:10px;">댓글 등록</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="write" class="page">
+            <h2>새 글 작성</h2>
+            <input type="text" placeholder="제목" style="width:100%; padding:10px; margin-bottom:10px;">
+            <textarea style="width:100%; height:200px; padding:10px;"></textarea>
+            <div style="margin-top:10px;">
+                <button onclick="showPage('main')">취소</button>
+                <button class="btn-main" onclick="showPage('main')">등록하기</button>
+            </div>
+        </section>
+
+        <section id="login" class="page">
+            <h2 style="text-align:center">로그인</h2>
+            <input type="text" placeholder="ID" style="width:100%; padding:10px; margin-bottom:10px;">
+            <input type="password" placeholder="PW" style="width:100%; padding:10px; margin-bottom:10px;">
+            <button class="btn-main" style="width:100%">접속</button>
+        </section>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
