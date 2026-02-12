@@ -3,85 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bitcandy - 비트캔디</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>bitcandy</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap');
-        body { font-family: 'Pretendard', sans-serif; background-color: #f8fafc; color: #334155; margin: 0; }
-        .page { display: none; }
+        /* 기본 스타일 */
+        body { margin: 0; padding: 0; background: #f0f2f5; font-family: sans-serif; color: #333; }
+        nav { background: #fff; border-bottom: 1px solid #ddd; padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; sticky: top; }
+        .logo { font-size: 22px; font-weight: bold; cursor: pointer; text-decoration: none; color: #333; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        
+        /* 페이지 전환용 */
+        .page { display: none; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 30px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .active { display: block; }
+        
+        /* 게시글 리스트 */
+        .post-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .post-item:hover { background: #f9f9f9; }
+        
+        /* 버튼류 */
+        .btn { border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-dark { background: #333; color: #fff; }
+        .btn-light { background: #eee; color: #333; }
+        
+        /* 입력창 */
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; }
+        
+        /* 추천 시스템 (화살표) */
+        .vote-area { display: flex; align-items: center; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; }
+        .arrow { border: 1px solid #ddd; background: #f9f9f9; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-4xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="text-2xl font-black cursor-pointer" onclick="location.reload()">bitcandy</div>
-            <div class="flex gap-4">
-                <button onclick="showPage('login')" class="text-sm font-bold text-slate-500">로그인</button>
-                <button onclick="showPage('register')" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-bold">회원가입</button>
-            </div>
+
+    <nav>
+        <div class="logo" onclick="showPage('main')">bitcandy</div>
+        <div>
+            <button class="btn" onclick="showPage('login')">로그인</button>
+            <button class="btn btn-dark" onclick="showPage('register')">회원가입</button>
         </div>
     </nav>
 
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="container">
         <section id="main" class="page active">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">전체 게시판</h2>
-                <button onclick="showPage('write')" class="bg-slate-800 text-white px-4 py-2 rounded-lg font-bold">글쓰기</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="margin:0">게시판</h2>
+                <button class="btn btn-dark" onclick="showPage('write')">글쓰기</button>
             </div>
-            <div class="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100 shadow-sm">
-                <div class="p-6 hover:bg-slate-50 cursor-pointer flex gap-4" onclick="showPage('postDetail')">
-                    <div class="flex flex-col items-center text-slate-400">
-                        <span>▲</span><span class="font-bold text-slate-800">12</span><span>▼</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg">비트캔디에 오신 것을 환영합니다.</h3>
-                        <p class="text-slate-500 text-sm">자유로운 소통의 장입니다.</p>
-                    </div>
+            <div id="post-list">
+                <div class="post-item" onclick="showPage('postDetail')">
+                    <h3 style="margin:0 0 5px 0;">비트캔디 커뮤니티 안내</h3>
+                    <p style="margin:0; color:#666; font-size:14px;">본 커뮤니티는 자유로운 소통을 위해 만들어졌습니다.</p>
                 </div>
+                <div style="padding:40px; text-align:center; color:#999;">새로운 글이 없습니다.</div>
             </div>
         </section>
 
         <section id="postDetail" class="page">
-            <button onclick="showPage('main')" class="mb-4 text-slate-400 font-bold">← 뒤로가기</button>
-            <div class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
-                <h2 class="text-2xl font-bold mb-4">비트캔디에 오신 것을 환영합니다.</h2>
-                <p class="text-slate-600 leading-relaxed mb-8">여기에 게시글 내용이 들어옵니다.</p>
-                <div class="border-t pt-6">
-                    <h4 class="font-bold mb-4">댓글 작성</h4>
-                    <textarea class="w-full p-4 border rounded-xl bg-slate-50 mb-2" placeholder="댓글을 남겨주세요"></textarea>
-                    <div class="flex justify-end"><button class="bg-slate-800 text-white px-4 py-2 rounded-lg">등록</button></div>
-                </div>
+            <button class="btn" onclick="showPage('main')">← 목록으로</button>
+            <h2 style="margin-top:20px;">비트캔디 커뮤니티 안내</h2>
+            <p style="line-height:1.6; color:#444;">비트캔디 커뮤니티 상세 페이지입니다. 이곳에서 내용을 읽고 의견을 나눌 수 있습니다.</p>
+            
+            <div class="vote-area">
+                <button class="arrow">▲</button>
+                <strong>0</strong>
+                <button class="arrow">▼</button>
+            </div>
+
+            <div style="margin-top:30px;">
+                <h4>댓글</h4>
+                <textarea placeholder="댓글을 입력하세요."></textarea>
+                <button class="btn btn-dark" style="float:right;">댓글 등록</button>
+                <div style="clear:both;"></div>
             </div>
         </section>
 
         <section id="write" class="page">
-            <div class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
-                <h2 class="text-xl font-bold mb-6">새 글 작성</h2>
-                <input type="text" placeholder="제목" class="w-full p-4 border rounded-xl mb-4 bg-slate-50">
-                <textarea rows="8" placeholder="내용" class="w-full p-4 border rounded-xl mb-4 bg-slate-50"></textarea>
-                <div class="flex gap-4">
-                    <button onclick="showPage('main')" class="flex-1 font-bold text-slate-400">취소</button>
-                    <button onclick="showPage('main')" class="flex-1 bg-slate-800 text-white py-4 rounded-xl font-bold">등록하기</button>
-                </div>
+            <h2>새 게시글 작성</h2>
+            <input type="text" placeholder="제목을 입력하세요">
+            <textarea style="height:200px;" placeholder="내용을 입력하세요"></textarea>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-light" style="flex:1" onclick="showPage('main')">취소</button>
+                <button class="btn btn-dark" style="flex:2" onclick="showPage('main')">등록하기</button>
             </div>
         </section>
 
-        <section id="login" class="page">
-            <div class="max-w-sm mx-auto bg-white border border-slate-200 rounded-xl p-8 mt-10 shadow-sm">
-                <h2 class="text-2xl font-bold text-center mb-8">bitcandy 로그인</h2>
-                <input type="text" placeholder="ID" class="w-full p-4 border rounded-xl mb-4">
-                <input type="password" placeholder="Password" class="w-100 p-4 border rounded-xl mb-6">
-                <button class="w-full bg-slate-800 text-white py-4 rounded-xl font-bold">접속</button>
-            </div>
+        <section id="login" class="page" style="max-width:400px; margin:auto;">
+            <h2 style="text-align:center">로그인</h2>
+            <input type="text" placeholder="아이디">
+            <input type="password" placeholder="비밀번호">
+            <button class="btn btn-dark" style="width:100%">로그인</button>
+        </section>
+
+        <section id="register" class="page" style="max-width:400px; margin:auto;">
+            <h2 style="text-align:center">회원가입</h2>
+            <input type="text" placeholder="아이디">
+            <input type="email" placeholder="이메일">
+            <input type="password" placeholder="비밀번호">
+            <button class="btn btn-dark" style="width:100%">가입하기</button>
         </section>
     </div>
 
     <script>
+        // 페이지 전환 함수
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
     </script>
 </body>
