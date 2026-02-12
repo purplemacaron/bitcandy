@@ -2,76 +2,78 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>bitcandy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bitcandy - 비트캔디</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 외부 연결 없이 내부에서 디자인 정의 */
-        body { margin: 0; font-family: sans-serif; background: #f3f4f6; color: #333; }
-        nav { background: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
-        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
-        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        .page { display: none; background: white; padding: 2rem; border-radius: 10px; border: 1px solid #ddd; }
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #f8fafc; color: #334155; margin: 0; }
+        .page { display: none; }
         .active { display: block; }
-        .post-item { padding: 1.5rem; border-bottom: 1px solid #eee; cursor: pointer; display: flex; gap: 1rem; }
-        .post-item:hover { background: #fafafa; }
-        .vote-box { display: flex; flex-direction: column; align-items: center; color: #999; width: 30px; }
-        button { cursor: pointer; border: none; border-radius: 5px; padding: 0.5rem 1rem; }
-        .btn-main { background: #374151; color: white; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo" onclick="showPage('main')">bitcandy</div>
-        <div>
-            <button onclick="showPage('login')">로그인</button>
-            <button class="btn-main" onclick="showPage('register')">회원가입</button>
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="text-2xl font-black cursor-pointer" onclick="location.reload()">bitcandy</div>
+            <div class="flex gap-4">
+                <button onclick="showPage('login')" class="text-sm font-bold text-slate-500">로그인</button>
+                <button onclick="showPage('register')" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-bold">회원가입</button>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="max-w-4xl mx-auto px-4 py-8">
         <section id="main" class="page active">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-                <h2>커뮤니티 광장</h2>
-                <button class="btn-main" onclick="showPage('write')">글쓰기</button>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">전체 게시판</h2>
+                <button onclick="showPage('write')" class="bg-slate-800 text-white px-4 py-2 rounded-lg font-bold">글쓰기</button>
             </div>
-            <div class="post-item" onclick="showPage('postDetail')">
-                <div class="vote-box"><span>▲</span><strong>10</strong><span>▼</span></div>
-                <div>
-                    <h3 style="margin:0">비트캔디에 오신 것을 환영합니다.</h3>
-                    <p style="color:#666; font-size:0.9rem;">자유롭게 이야기를 나누세요.</p>
+            <div class="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100 shadow-sm">
+                <div class="p-6 hover:bg-slate-50 cursor-pointer flex gap-4" onclick="showPage('postDetail')">
+                    <div class="flex flex-col items-center text-slate-400">
+                        <span>▲</span><span class="font-bold text-slate-800">12</span><span>▼</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">비트캔디에 오신 것을 환영합니다.</h3>
+                        <p class="text-slate-500 text-sm">자유로운 소통의 장입니다.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="postDetail" class="page">
-            <button onclick="showPage('main')">← 목록으로</button>
-            <div style="display:flex; gap:2rem; margin-top:2rem;">
-                <div class="vote-box"><span>▲</span><strong>10</strong><span>▼</span></div>
-                <div style="flex:1">
-                    <h2>비트캔디에 오신 것을 환영합니다.</h2>
-                    <p>이곳은 게시글 상세 내용이 들어가는 자리입니다.</p>
-                    <hr>
-                    <h4>댓글</h4>
-                    <textarea style="width:100%; height:80px;"></textarea>
-                    <button class="btn-main" style="margin-top:10px;">댓글 등록</button>
+            <button onclick="showPage('main')" class="mb-4 text-slate-400 font-bold">← 뒤로가기</button>
+            <div class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
+                <h2 class="text-2xl font-bold mb-4">비트캔디에 오신 것을 환영합니다.</h2>
+                <p class="text-slate-600 leading-relaxed mb-8">여기에 게시글 내용이 들어옵니다.</p>
+                <div class="border-t pt-6">
+                    <h4 class="font-bold mb-4">댓글 작성</h4>
+                    <textarea class="w-full p-4 border rounded-xl bg-slate-50 mb-2" placeholder="댓글을 남겨주세요"></textarea>
+                    <div class="flex justify-end"><button class="bg-slate-800 text-white px-4 py-2 rounded-lg">등록</button></div>
                 </div>
             </div>
         </section>
 
         <section id="write" class="page">
-            <h2>새 글 작성</h2>
-            <input type="text" placeholder="제목" style="width:100%; padding:10px; margin-bottom:10px;">
-            <textarea style="width:100%; height:200px; padding:10px;"></textarea>
-            <div style="margin-top:10px;">
-                <button onclick="showPage('main')">취소</button>
-                <button class="btn-main" onclick="showPage('main')">등록하기</button>
+            <div class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
+                <h2 class="text-xl font-bold mb-6">새 글 작성</h2>
+                <input type="text" placeholder="제목" class="w-full p-4 border rounded-xl mb-4 bg-slate-50">
+                <textarea rows="8" placeholder="내용" class="w-full p-4 border rounded-xl mb-4 bg-slate-50"></textarea>
+                <div class="flex gap-4">
+                    <button onclick="showPage('main')" class="flex-1 font-bold text-slate-400">취소</button>
+                    <button onclick="showPage('main')" class="flex-1 bg-slate-800 text-white py-4 rounded-xl font-bold">등록하기</button>
+                </div>
             </div>
         </section>
 
         <section id="login" class="page">
-            <h2 style="text-align:center">로그인</h2>
-            <input type="text" placeholder="ID" style="width:100%; padding:10px; margin-bottom:10px;">
-            <input type="password" placeholder="PW" style="width:100%; padding:10px; margin-bottom:10px;">
-            <button class="btn-main" style="width:100%">접속</button>
+            <div class="max-w-sm mx-auto bg-white border border-slate-200 rounded-xl p-8 mt-10 shadow-sm">
+                <h2 class="text-2xl font-bold text-center mb-8">bitcandy 로그인</h2>
+                <input type="text" placeholder="ID" class="w-full p-4 border rounded-xl mb-4">
+                <input type="password" placeholder="Password" class="w-100 p-4 border rounded-xl mb-6">
+                <button class="w-full bg-slate-800 text-white py-4 rounded-xl font-bold">접속</button>
+            </div>
         </section>
     </div>
 
@@ -79,6 +81,7 @@
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
         }
     </script>
 </body>
